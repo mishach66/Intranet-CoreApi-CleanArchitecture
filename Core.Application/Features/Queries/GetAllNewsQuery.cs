@@ -1,5 +1,6 @@
 ﻿using Core.Application.Interfaces.Repositories;
 using Core.Domain.Models;
+using System.Linq;
 
 namespace Core.Application.Features.Queries
 {
@@ -14,7 +15,8 @@ namespace Core.Application.Features.Queries
 
         public async Task<IEnumerable<News>> Handle(GetAllNewsQuery request, CancellationToken cancellationToken)
         {
-            return await _newsRepository.GetAllAsync();
+            var result = await _newsRepository.GetAllAsync();
+            return result.OrderByDescending(n => n.Date).Take(5);
         }
     }
 }
