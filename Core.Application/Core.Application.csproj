@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\Services\" />
-    <Folder Include="Pagination\" />
   </ItemGroup>
 
 </Project>

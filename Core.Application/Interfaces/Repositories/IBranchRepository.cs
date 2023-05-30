@@ -10,5 +10,6 @@ namespace Core.Application.Interfaces.Repositories
 {
     public interface IBranchRepository : IRepositoryBase<Branch>
     {
+        Task<List<Branch>> GetBranchesSortedAsync();
     }
 }

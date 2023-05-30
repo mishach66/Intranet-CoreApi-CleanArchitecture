@@ -1,6 +1,7 @@
 ﻿using Core.Application.DTO;
 using Core.Application.Features.Commands;
 using Core.Application.Features.Queries;
+using Core.Application.Pagination;
 using Core.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,9 @@ namespace Presentation.WebApi.Controllers
         // GET: api/<BranchController>
         [HttpGet("allBranches")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Branch>> GetAllBranches()
+        public async Task<IEnumerable<Branch>> GetAllBranches([FromQuery] PaginationFilter? filter)
         {
-            return await _mediator.Send(new GetAllBranchesQuery());
+            return await _mediator.Send(new GetAllBranchesQuery(filter));
         }
 
         // GET api/<BranchController>/5
