@@ -20,12 +20,21 @@ namespace Presentation.WebApi.Controllers
             _mediator = mediator;
         }
 
+        //// GET: api/<BranchController>
+        //[HttpGet("allBranches")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IEnumerable<Branch>> GetAllBranches([FromQuery] PaginationFilter? filter)
+        //{
+        //    return await _mediator.Send(new GetAllBranchesQuery(filter));
+        //}
+
         // GET: api/<BranchController>
         [HttpGet("allBranches")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Branch>> GetAllBranches([FromQuery] PaginationFilter? filter)
+        public async Task<BranchesWithTotalCount> GetAllBranches([FromQuery] PaginationFilter? filter)
         {
-            return await _mediator.Send(new GetAllBranchesQuery(filter));
+            var res = await _mediator.Send(new GetAllBranchesQuery(filter));
+            return res;
         }
 
         // GET api/<BranchController>/5
