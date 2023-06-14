@@ -14,6 +14,7 @@ namespace Infrastructure.Persistence.Data.Configuration
         public void Configure(EntityTypeBuilder<Branch> builder)
         {
             //builder.HasMany(x => x.Employees).WithOne(b => b.Branch).HasForeignKey(b => b.BranchId).OnDelete(DeleteBehavior.ClientSetNull);
+            //builder.HasMany(x => x.Employees).WithOne(b => b.Branch).HasPrincipalKey(keyExpression: x => x.Id).OnDelete(DeleteBehavior.ClientNoAction);
         }
     }
 }
