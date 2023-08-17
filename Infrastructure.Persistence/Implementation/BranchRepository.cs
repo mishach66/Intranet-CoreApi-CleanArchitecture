@@ -16,7 +16,8 @@ namespace Infrastructure.Persistence.Implementation
 
         public async Task<List<Branch>> GetBranchesSortedAsync()
         {
-            var sortedBranches =  await _context.Branches.OrderBy(b => b.FullAddress).ToListAsync();
+            //var sortedBranches =  await _context.Branches.OrderBy(b => b.FullAddress).ToListAsync();
+            var sortedBranches = await _context.Branches.Include(b => b.City).OrderBy(b => b.FullAddress).ToListAsync();
 
             var capitalCityBranches = sortedBranches.Where(b => b.FullAddress.StartsWith("თბილისი")).ToList();
             sortedBranches.RemoveAll(b => b.FullAddress.StartsWith("თბილისი"));
