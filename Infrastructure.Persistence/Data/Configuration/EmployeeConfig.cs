@@ -32,6 +32,7 @@ namespace Infrastructure.Persistence.Data.Configuration
             //builder.HasOne(e => e.Branch).WithMany(b => b.Employees).HasForeignKey(e => e.BranchId).OnDelete(DeleteBehavior.ClientSetNull);
             builder.HasOne(e => e.Branch).WithMany(b => b.Employees).HasForeignKey(e => e.BranchId).OnDelete(DeleteBehavior.SetNull);
             builder.HasOne(e => e.City).WithMany(c => c.Employees).HasForeignKey(e => e.CityId).OnDelete(DeleteBehavior.ClientNoAction);
+            // builder.HasIndex(e => e.IdNumber).IsUnique();  // ეს საჭიროა ID Number-ების უნიკალურობისთვის
         }
     }
 }
