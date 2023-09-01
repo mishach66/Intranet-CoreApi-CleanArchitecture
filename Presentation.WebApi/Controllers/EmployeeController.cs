@@ -3,6 +3,7 @@ using MediatR;
 using Core.Domain.Models;
 using Core.Application.Features.Queries;
 using Core.Application.Features.Commands;
+using Core.Application.Pagination;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,12 +19,21 @@ namespace Presentation.WebApi.Controllers
             _mediator = mediator;
         }
 
+        //// GET: api/<EmployeeController>
+        //[HttpGet("allEmployees")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IEnumerable<Employee>> GetAllEmployees()
+        //{
+        //    return await _mediator.Send(new GetAllEmployeesQuery());
+        //}
+
         // GET: api/<EmployeeController>
         [HttpGet("allEmployees")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Employee>> GetAllEmployees()
+        public async Task<IEnumerable<Employee>> GetAllEmployees([FromQuery] PaginationFilter? filter)
         {
-            return await _mediator.Send(new GetAllEmployeesQuery());
+            var res = await _mediator.Send(new GetAllEmployeesQuery(filter));
+            return res;
         }
 
         // GET api/<EmployeeController>/5

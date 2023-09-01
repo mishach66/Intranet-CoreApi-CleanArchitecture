@@ -15,7 +15,7 @@ namespace Core.Application.Features.Queries
 
     public sealed record class GetAllBranchesQuery : IRequest<BranchesWithTotalCount>
     {
-        public PaginationFilter _filter;
+        internal PaginationFilter _filter;
         public GetAllBranchesQuery()
         {
 
@@ -55,7 +55,8 @@ namespace Core.Application.Features.Queries
 
             var validFilter = new PaginationFilter(request._filter.PageNumber, request._filter.PageSize);
 
-            var PgResponse = new PagedResponse(allBranch, validFilter.PageNumber, validFilter.PageSize).BranchPagedList();
+            //var PgResponse = new PagedResponse(allBranch, validFilter.PageNumber, validFilter.PageSize).BranchPagedList();
+            var PgResponse = new PagedResponseGeneric<Branch>(allBranch, validFilter.PageNumber, validFilter.PageSize).PagedList();
 
             var res = PgResponse;
 
