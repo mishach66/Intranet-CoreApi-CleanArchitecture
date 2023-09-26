@@ -3,6 +3,7 @@ using Core.Application.Mapper;
 using Core.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using FluentValidation;
+using Core.Application.DTO;
 
 namespace Core.Application.Features.Commands
 {
@@ -22,6 +23,8 @@ namespace Core.Application.Features.Commands
         public Guid? BranchId { get; set; }
         public Guid? CityId { get; set; }
         public Languages? Language { get; set; }
+        public string? ImageName { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
     
     public class CreateEmployeeHandler : IRequestHandler<CreateEmployeeCommand, Guid>
@@ -38,6 +41,11 @@ namespace Core.Application.Features.Commands
         public async Task<Guid> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var employeeentity = AppMapper.Mapper.Map<Employee>(request);
+
+            FileDTO fileUploadRequest = new();
+            fileUploadRequest.File = request.ImageFile;
+            var fileUploadResult = await _mediator.Send(new FileUploadCommand { FileForUpoad = fileUploadRequest });
+            employeeentity.ImageName = fileUploadResult.UploadedFileUrl;
 
             if (employeeentity is null)
             {

@@ -53,6 +53,18 @@ namespace Core.Application.Features.Queries
             var allBranch = await _branchRepository.GetBranchesSortedAsync();
             int count = allBranch.Count;
 
+            if (request._filter == null) 
+            {
+                BranchesWithTotalCount bwtcwp = new();
+                // bwtcwp - Branches with total count without pagination
+                bwtcwp.Count = count;
+                bwtcwp.PageSize = 0;
+                bwtcwp.PageNumber = 0;
+                bwtcwp.Branches = allBranch;
+
+                return bwtcwp;
+            }
+
             var validFilter = new PaginationFilter(request._filter.PageNumber, request._filter.PageSize);
 
             //var PgResponse = new PagedResponse(allBranch, validFilter.PageNumber, validFilter.PageSize).BranchPagedList();
@@ -61,6 +73,7 @@ namespace Core.Application.Features.Queries
             var res = PgResponse;
 
             BranchesWithTotalCount bwtc = new ();
+            // bwtc - Branches With Total Count Paged
             bwtc.Count = count;
             bwtc.PageSize = request._filter.PageSize;
             bwtc.PageNumber = request._filter.PageNumber;

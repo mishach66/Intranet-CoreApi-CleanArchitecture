@@ -37,6 +37,15 @@ namespace Presentation.WebApi.Controllers
             return res;
         }
 
+        // GET: api/<BranchController>
+        [HttpGet("allBranchesWithoutPagination")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<BranchesWithTotalCount> GetAllBranches()
+        {
+            var res = await _mediator.Send(new GetAllBranchesQuery());
+            return res;
+        }
+
         // GET api/<BranchController>/5
         [HttpGet("branchById/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
