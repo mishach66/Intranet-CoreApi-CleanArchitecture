@@ -36,14 +36,24 @@ namespace Presentation.WebApi.Controllers
             return res;
         }
 
+        //// GET api/<EmployeeController>/5
+        //[HttpGet("employeeById/{id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<Employee> GetEmployeeById(Guid id)
+        //{
+        //    return await _mediator.Send(new GetEmployeeByIdQuery(id));
+        //}
+
         // GET api/<EmployeeController>/5
         [HttpGet("employeeById/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<Employee> GetEmployeeById(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Employee))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetEmployeeById(Guid id)
         {
-            return await _mediator.Send(new GetEmployeeByIdQuery(id));
+            var result = await _mediator.Send(new GetEmployeeByIdQuery(id));
+            return result == null ? NotFound() : Ok(result);
         }
-
+        
         // GET api/<EmployeeController>/5
         [HttpGet("employeeByIdWithBranch/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -51,11 +61,20 @@ namespace Presentation.WebApi.Controllers
         {
             return await _mediator.Send(new GetEmployeeByIdWithBranchQuery(id));
         }
-        
+
+        //// POST api/<EmployeeController>
+        //[HttpPost("createEmployee")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<ActionResult<Guid>> CreateEmployee([FromForm] CreateEmployeeCommand command)
+        //{
+        //    var result = await _mediator.Send(command);
+        //    return Ok(result);
+        //}
+
         // POST api/<EmployeeController>
         [HttpPost("createEmployee")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Guid>> CreateEmployee([FromForm] CreateEmployeeCommand command)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid))]
+        public async Task<IActionResult> CreateEmployee([FromForm] CreateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

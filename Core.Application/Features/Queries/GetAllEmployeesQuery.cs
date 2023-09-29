@@ -30,7 +30,8 @@ namespace Core.Application.Features.Queries
         {
             // return await _employeeRepository.GetAllAsync(); // პაგინაციის გარეშე
 
-            var allEmployees = await _employeeRepository.GetAllAsync();
+            // var allEmployees = await _employeeRepository.GetAllAsync(); // თანამშრომლები ფილიალიების გარეშე
+            var allEmployees = await _employeeRepository.GetAllWithBranchAsync();
             var allEmployeesList = allEmployees.ToList();
             var validFilter = new PaginationFilter(request._filter.PageNumber, request._filter.PageSize);
             var PgResponse = new PagedResponseGeneric<Employee>(allEmployeesList, validFilter.PageNumber, validFilter.PageSize).PagedList();

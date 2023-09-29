@@ -6,5 +6,6 @@ namespace Core.Application.Interfaces.Repositories
     public interface IEmployeeRepository : IRepositoryBase<Employee>
     {
         Task<Employee> GetByIdWithBranchAsync(object id);
+        Task<IEnumerable<Employee>> GetAllWithBranchAsync();
     }
 }

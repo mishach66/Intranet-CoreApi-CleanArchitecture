@@ -9,10 +9,10 @@ namespace Core.Domain.Models
         Georgian,
         English,
         French,
-        Russian,
+        Spanish,
         Other
     }
-
+    
     public class Employee : AuditableEntity
     {
         public string? Givenname { get; set; }
