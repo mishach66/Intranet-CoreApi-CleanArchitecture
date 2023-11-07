@@ -20,7 +20,8 @@ namespace Core.Application.Features.Commands
         public string? AdditionalInfo { get; set; }
         public Guid? BranchId { get; set; }
         public Guid? CityId { get; set; }
-        public Languages? Language { get; set; }
+        //public Languages? Language { get; set; }
+        public List<Guid>? Languages { get; set; }
     }
 
     public class EditEmployeeHandler : IRequestHandler<EditEmployeeCommand, Guid>

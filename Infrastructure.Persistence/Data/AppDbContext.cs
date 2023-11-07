@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new EmployeeConfig());
         modelBuilder.ApplyConfiguration(new BranchConfig());
+        modelBuilder.ApplyConfiguration(new LanguageСlassifierConfig());
     }
 
     public DbSet<Employee> Employees { get; set; }
@@ -22,4 +23,6 @@ public class AppDbContext : DbContext
     public DbSet<News> News { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<Vacancy> Vacancies { get; set; }
+    public DbSet<Language> Languages { get; set; }
+    public DbSet<LanguageСlassifier> LanguageСlassifiers { get; set; }
 }

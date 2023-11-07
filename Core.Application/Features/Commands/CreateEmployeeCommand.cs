@@ -22,7 +22,9 @@ namespace Core.Application.Features.Commands
         public string? AdditionalInfo { get; set; }
         public Guid? BranchId { get; set; }
         public Guid? CityId { get; set; }
-        public Languages? Language { get; set; }
+        //public Languages? Language { get; set; }
+        //public List<Language>? Languages { get; set; }
+        public List<Guid>? LanguageСlassifiersIds { get; set; }
         public string? ImageName { get; set; }
         public IFormFile? ImageFile { get; set; }
     }
@@ -53,10 +55,16 @@ namespace Core.Application.Features.Commands
             }
 
             await _iEmployeeRepository.InsertAsync(employeeentity);
+
+            foreach (var langId in request.LanguageСlassifiersIds)
+            {
+                await _mediator.Send(new CreateLanguageCommand { EmployeeId = employeeentity.Id, LanguageСlassifierId = langId });
+            }
+
             return employeeentity.Id;
         }
     }
-
+    
     public class EmployeeValidator : AbstractValidator<CreateEmployeeCommand>
     {
         public EmployeeValidator()
@@ -90,7 +98,7 @@ namespace Core.Application.Features.Commands
                 .Cascade(CascadeMode.Stop)
                 .Matches(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").WithMessage("ელ. ფოსტის ფორმატი არასწორია");
 
-            RuleFor(x => x.Language).IsInEnum().WithMessage("დაუშვებელი ენა");
+            //RuleFor(x => x.Languages).IsInEnum().WithMessage("დაუშვებელი ენა");
         }
 
         private bool HasOnlyLetters(string name)

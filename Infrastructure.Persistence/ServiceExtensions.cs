@@ -22,6 +22,8 @@ namespace Infrastructure.Persistence
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<ISexRepository, SexRepository>();
             services.AddTransient<IVacancyRepository, VacancyRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddTransient<ILanguageСlassifiersRepository, LanguageСlassifiersRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));

@@ -21,6 +21,10 @@ namespace Core.Application.Mapper
             CreateMap<Employee, CreateEmployeeCommand>().ReverseMap();
             CreateMap<Employee, EditEmployeeCommand>().ReverseMap();
 
+            CreateMap<Language, LanguageResponse>().ReverseMap();
+            CreateMap<Language, CreateLanguageCommand>().ReverseMap();
+            CreateMap<Language, EditLanguageCommand>().ReverseMap();
+
             CreateMap<News, NewsResponse>().ReverseMap();
             CreateMap<News, CreateNewsCommand>().ReverseMap();
             CreateMap<News, EditNewsCommand>().ReverseMap();

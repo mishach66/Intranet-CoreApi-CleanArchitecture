@@ -119,7 +119,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CityId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -158,9 +157,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Language")
-                        .HasColumnType("int");
-
                     b.Property<string>("MobilePhone")
                         .HasColumnType("nvarchar(max)");
 
@@ -194,6 +190,120 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("SexId");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Language", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LanguageСlassifierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("LanguageСlassifierId");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.LanguageСlassifier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LanguageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LanguageСlassifiers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c47e86d8-87c7-413f-b569-19c53b3e45e6"),
+                            DateCreated = new DateTime(2023, 10, 22, 16, 2, 11, 428, DateTimeKind.Local).AddTicks(6963),
+                            LanguageName = "ინგლისური",
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7bff9ed9-0226-4f22-b105-03d3bd13f328"),
+                            DateCreated = new DateTime(2023, 10, 22, 16, 2, 11, 428, DateTimeKind.Local).AddTicks(7031),
+                            LanguageName = "გერმანული",
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("d18fdd15-d0ca-43cc-bbf1-1847fd50f2ce"),
+                            DateCreated = new DateTime(2023, 10, 22, 16, 2, 11, 428, DateTimeKind.Local).AddTicks(7034),
+                            LanguageName = "ფრანგული",
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("f9ffedab-9141-4595-8c0e-59fbaebe5511"),
+                            DateCreated = new DateTime(2023, 10, 22, 16, 2, 11, 428, DateTimeKind.Local).AddTicks(7036),
+                            LanguageName = "ესპანური",
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("69b476fa-45bb-4046-bcf1-8eb975dc6158"),
+                            DateCreated = new DateTime(2023, 10, 22, 16, 2, 11, 428, DateTimeKind.Local).AddTicks(7038),
+                            LanguageName = "იტალიური",
+                            Version = 0
+                        });
                 });
 
             modelBuilder.Entity("Core.Domain.Models.News", b =>
@@ -358,8 +468,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasOne("Core.Domain.Models.City", "City")
                         .WithMany("Employees")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientNoAction);
 
                     b.HasOne("Core.Domain.Models.Sex", "Sex")
                         .WithMany("Employees")
@@ -372,6 +481,21 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Sex");
                 });
 
+            modelBuilder.Entity("Core.Domain.Models.Language", b =>
+                {
+                    b.HasOne("Core.Domain.Models.Employee", "Employee")
+                        .WithMany("Languages")
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("Core.Domain.Models.LanguageСlassifier", "LanguageСlassifier")
+                        .WithMany("Languages")
+                        .HasForeignKey("LanguageСlassifierId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("LanguageСlassifier");
+                });
+
             modelBuilder.Entity("Core.Domain.Models.Branch", b =>
                 {
                     b.Navigation("Employees");
@@ -382,6 +506,16 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Branches");
 
                     b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.Employee", b =>
+                {
+                    b.Navigation("Languages");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.LanguageСlassifier", b =>
+                {
+                    b.Navigation("Languages");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.Sex", b =>

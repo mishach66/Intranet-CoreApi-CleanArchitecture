@@ -17,7 +17,8 @@ namespace Infrastructure.Persistence.Implementation
 
         public async Task<IEnumerable<Employee>> GetAllWithBranchAsync()
         {
-            return await _context.Employees.Include(e => e.Branch).ToListAsync();
+            var res = await _context.Employees.Include(e => e.Branch).ToListAsync();
+            return res;
         }
 
         public async Task<Employee> GetByIdWithBranchAsync(object id)

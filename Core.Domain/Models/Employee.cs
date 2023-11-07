@@ -1,18 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Core.Domain.Basics;
+using Core.Domain.CustomModelBinder;
 using Microsoft.AspNetCore.Http;
 
 namespace Core.Domain.Models
 {
-    public enum Languages
-    {
-        Georgian,
-        English,
-        French,
-        Spanish,
-        Other
-    }
-    
+    //public enum Languages
+    //{
+    //    Georgian,
+    //    English,
+    //    French,
+    //    Spanish,
+    //    Other
+    //}
+
     public class Employee : AuditableEntity
     {
         public string? Givenname { get; set; }
@@ -28,27 +29,29 @@ namespace Core.Domain.Models
         public string? WorkPhone { get; set; }
         public string? Address { get; set; }
         public string? AdditionalInfo { get; set; }
-        public Languages? Language { get; set; }
+        //public Languages? Language { get; set; }
 
         #region
         /// <summary>
         /// სურათის ატვირთვა
         /// </summary>
-
-        //[Column(TypeName = "nvarchar(500)")]
-        //[DisplayName("სურათის სახელი")]
         public string? ImageName { get; set; }
 
-        //[DisplayName("სურათის ატვირთვა")]
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
         #endregion
 
         public Guid? CityId { get; set; }
-        public City City { get; set; }
+        public City? City { get; set; }
         public Guid? SexId { get; set; }
-        public Sex Sex { get; set; }
+        public Sex? Sex { get; set; }
         public Guid? BranchId { get; set; }
         public Branch? Branch { get; set; }
+
+        public ICollection<Language>? Languages { get; set; }
+        public Employee()
+        {
+            Languages = new HashSet<Language>();
+        }
     }
 }
